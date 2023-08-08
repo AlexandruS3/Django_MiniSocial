@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+
+        <h2>UPDATE POST</h2>
+        <form action="/post/save">
+            <input name="id" type="hidden" placeholder="title" value="{{ post.id}}"/><br>
+            <input name="title" type="text" placeholder="title" value="{{ post.title}}"/><br>
+            <input name="body" type="text" placeholder="body" value="{{post.body}}"/><br>
+            <button>SAVE</button><br>
+        </form>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WELCOME TO MINI SOCIAL</title>
+</head>
+<body>
+
+    <h1 style="text-align: center;">WELCOME TO MINI SOCIAL</h1>
+    <div style="width: 60; margin: 10px auto;">
+    
+        {% block topbar %}
+            {% if user.is_authenticated %}
+             Welcome <a href="/user/profile/{{user.id}}"> {{ user.username}}!
+            <a href="/user/logout">Sing out</a>
+            <br/>
+             
+            {% endif %}
+            {% if messages %}
+                {% for message in messages %}
+                  {% if message.extra_tags == 'dragonball' %}
+                    <div style="color: olivedrab; padding: 10px; border: 3px solid rgb(17, 0, 255); margin-bottom: 10px;">
+                     {{ message }}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+            {% endif %} 
+        {% endblock  %}
+    </div>
+    
+    {% block navigation %}
+    <nav style="width: 60; margin: 10px auto;">
+        <a href="/">Home</a> *
+        {% if not user.is_authenticated %}
+            <a href="/user/register">Sign up</a> *
+            <a href="/user/login">Sign in</a>
+        {% else %}
+            <a href="/user/profile/{{user.id}}">profile  </a>
+        {% endif %}
+    </nav>
+    {% endblock %}
+
+    <div style="width: 60; margin: 10px auto;">
+        {% block content %}
+           
+        {% endblock %}
+
+    </div>
+    {% comment %} v HW3: add year automatically {% endcomment %}
+    <p style="text-align: center">&COPY; {% now "Y" %}, SOCIAL INC.</p>
+</body>    
+</html> 

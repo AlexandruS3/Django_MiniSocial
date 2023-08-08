@@ -1,0 +1,33 @@
+
+<!--
+    HW7: Create the post page
+    HW9: show all the comments to that post
+-->
+
+{% extends 'layout.html' %}
+{% block content %}
+ <h2>POSTS</h2>
+  <form action="/comment/save" method="POST">
+   <ul>
+      <li>
+        <p>{{ post.title }} </p>
+      </li>
+      <textarea name="body" placeholder="add comment"></textarea><br>
+      <input type="hidden" name="post_id" value="{{ post.id }}"> 
+      <button>+ Comment</button><br>
+      {% csrf_token %}
+      <h3>COOOOMEENTS</h3>
+        <ul>
+         {% for comment in comment %}
+           {% if comment.post.id == post.id %}
+            
+          <li>
+              {{ comment.body}}
+            </a>
+          </li>
+           {% endif %}
+         {% endfor %}
+        </ul>
+   </ul>
+ </form>
+{% endblock %}

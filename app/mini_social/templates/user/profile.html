@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+        <h2>USER PROFILE</h2>
+        {% if profileUser.id == visitingUser.id %}
+         <div>
+          <a href="/user/profile/edit/{{profileUser.id}}" >EDIT</a>
+          <a href="/post/create">+ Post</a>
+         <div>
+
+        {% endif %}
+        <h3>{{profileUser.username}} ({{profileUser.email}})
+         <!-- check if the user is in the friend list
+                if profileUser not in userFriends
+          -->  
+
+         {% if profileUser.id != visitingUser.id and not profileUserIsNotVisitingUserFriend %}
+           <a href="/user/add/friend/{{profileUser.id}}">+ ADD FRIEND </a>
+         {% endif %}
+        </h3>
+        <img src="{% static profileUser.avatar %}" width="150"/> 
+        
+        {% if profileUser.id == visitingUser.id %}
+        <h3>Settings</h3>
+         {% comment %} on/off notification {% endcomment %}
+            <form action="/user/preferences/notifications">
+             <label>
+                <input 
+                 type="checkbox"
+                 name = "toggle" 
+                 {% if show_notifications %}checked{% endif %}
+                 />
+                notifications
+            </label> 
+            <button>SAVE</button>
+            </form>
+        {% endif %}
+
+        <h3>Frineds</h3>
+        <ul>
+         {% for friend in userFriends %}
+          <li>
+            <a href="/user/profile/{{friend.id}}">
+                {{ friend.username }} 
+            </a>
+            <a href="/user/remove/friend/{{friend.id}}">
+                X
+            </a>
+          </li>
+         {% endfor %}
+        </ul>
+        
+        <!--
+            HW3: Update user profile so it's show all of it's posts
+            HW6: Using a loop list make sure that each post tittle is wrapped
+          -->
+        
+        <h3>Posts</h3>
+        <ul>
+         {% for post in posts %}
+          <li>
+            <a href="/post/page/{{post.id}}">
+              {{ post.title}}
+            </a>
+          </li>
+         {% endfor %}
+        </ul>
+        <!--
+            show post here
+        -->
+
+{% endblock %} 
